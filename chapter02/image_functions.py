@@ -18,3 +18,8 @@ cv2.imshow('img_eroded', img_eroded)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+print(img.shape)
+print(img_gray.shape)
+print(img_blur.shape)
+print(img_canny.shape)

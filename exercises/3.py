@@ -10,6 +10,7 @@ def show_image(img, window_name = None):
 def save_frame(frame, frame_num):
     os.chdir(os.path.dirname(os.path.abspath(__file__)) + '/../resources') 
     cv2.imwrite('frame{}.bmp'.format(frame_num), frame)
+    print('Stored frame {} in resources/'.format(frame_num))
 
 def read_webcam(width, height):
     cap = cv2.VideoCapture(0)

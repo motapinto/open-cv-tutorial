@@ -11,7 +11,6 @@
 > pip3 list
 5. Update dependencies file with new packages
 > pip3 freeze > dependencies.txt
-> deactivate
 6. Deactivate the virtual environment
 > deactivate
 7. Generate pylint file

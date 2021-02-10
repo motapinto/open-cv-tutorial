@@ -28,7 +28,7 @@ def select_roi(img, path):
     roi = cv2.selectROI(img)
     roi_img = img[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
     show_image(roi_img)
-    reformat_image(roi_img, path, '.roi.bmp')
+    reformat_image(roi_img, path, 'roi.bmp')
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
