@@ -10,16 +10,7 @@ kernel = np.ones((5, 5), np.uint8)
 img_dialation = cv2.dilate(img_canny, kernel, iterations=1)
 img_eroded = cv2.erode(img_dialation, kernel, iterations=1)
 
-cv2.imshow('img_gray', img_gray)
-cv2.imshow('img_blur', img_blur)
-cv2.imshow('img_canny', img_canny)
-cv2.imshow('img_dialation', img_dialation)
-cv2.imshow('img_eroded', img_eroded)
-
+images = np.concatenate((img_gray, img_blur, img_canny, img_dialation, img_eroded), axis=1)
+cv2.imshow('images', images)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-print(img.shape)
-print(img_gray.shape)
-print(img_blur.shape)
-print(img_canny.shape)

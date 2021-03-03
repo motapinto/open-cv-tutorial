@@ -26,15 +26,18 @@ if __name__ == '__main__':
             print('Cannot read image')
             exit(0)
 
+        img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+
         # Original image and histogram
         fig, ((ax1, ax2), (ax3, ax4), (ax5, ax6)) = plt.subplots(3, 2)
         ax1.imshow(img)
         plot_histogram(img, ax2)
 
         # Histogram equalization
-        equ = cv2.equalizeHist(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
-        ax3.imshow(cv2.cvtColor(equ, cv2.COLOR_BGR2RGB))
-        plot_histogram(equ, ax4)
+        img_yuv[:,:,0] = cv2.equalizeHist(img_yuv[:,:,0])
+        img_equalized = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR)
+        ax3.imshow(img_equalized)
+        plot_histogram(img_yuv, ax4)
 
         # CLAHE (Contrast Limited Adaptive Histogram Equalization)
         clahe = cv2.createCLAHE().apply(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
@@ -44,4 +47,4 @@ if __name__ == '__main__':
         plt.xlim([0, 256])
         plt.show()
     else:
-        print('Usage: python exercises/4.py <path of image>')
+        print('Usage: python exercises/4.py <path of image with with low contrast>')

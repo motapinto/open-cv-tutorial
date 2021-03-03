@@ -1,11 +1,7 @@
 import cv2
 import sys
 import os
-
-def show_image(img, window_name = None):
-    if img is not None:
-        if window_name is None: window_name = 'webcam'
-        cv2.imshow(window_name, img)
+import numpy as np
 
 def save_frame(frame, frame_num):
     os.chdir(os.path.dirname(os.path.abspath(__file__)) + '/../resources') 
@@ -22,13 +18,21 @@ def read_webcam(width, height):
     while True:
         success, frame = cap.read()
         if not success: break
-        show_image(frame, 'frame')
-
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        show_image(frame_gray, 'frame_gray')
-
         frame_binary = cv2.threshold(frame_gray, 128, 255, cv2.THRESH_BINARY)[1]
-        show_image(frame_binary, 'frame_binary')
+        
+        # Object tracking
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        lower_blue = np.array([110,50,50])
+        upper_blue = np.array([130,255,255])
+        # Threshold the HSV image to get only blue colors
+        mask = cv2.inRange(hsv, lower_blue, upper_blue)
+        # Bitwise-AND mask and original image
+        tracking = cv2.bitwise_and(frame,frame, mask=mask)
+        
+        # reconverts images with 1 channel to 3 channels since hstack requires images with same shape
+        frames = np.hstack((frame, cv2.cvtColor(frame_gray, cv2.COLOR_GRAY2BGR), cv2.cvtColor(frame_binary, cv2.COLOR_GRAY2BGR), tracking))
+        cv2.imshow('frames', frames)
 
         i += 1
         if cv2.waitKey(1) != -1:

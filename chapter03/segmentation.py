@@ -19,9 +19,9 @@ img_canny = cv2.Canny(img_blur, 50, 50)
 img_contours = img.copy()
 get_contours(img_canny, img_contours)
 
-cv2.imshow('img', img)
+images = np.concatenate((img, img_contours), axis=1)
+cv2.imshow('images', images)
 cv2.imshow('img_canny', img_canny)
-cv2.imshow('img_contours', img_contours)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
